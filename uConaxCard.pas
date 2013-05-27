@@ -64,7 +64,6 @@ private
 	transport: ConaxTransport;
 	ecmCounter: Cardinal;
 	emmCounter: Cardinal;
-	ienitial:Boolean;
 	watch : TStopWatch;
 	lastEcm: ByteArray;
 	lastControlWord: ByteArray;
@@ -102,12 +101,10 @@ implementation
 		self.sendNoAccess := LowerCase(config.readString(CONFIG_SECTION_EMULATOR,CONFIG_NO_ACCESS_MODE,'error')) = 'error';
 		self.acceptIdentify := config.readBool(CONFIG_SECTION_EMULATOR,CONFIG_ACCEPT_IDENTIFY,true);
 		self.watch := TStopWatch.Create;
-		self.ienitial:=true;
 		self.transport := transport;
 		self.cardInfo := cardInfo;
 		self.resetWatcher := resetWatcher;
 		self.gateway := gateway;
-		self.DEBUG := false;
 		
 		emmCounter:=0;
 		ecmCounter:=0;
