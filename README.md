@@ -45,7 +45,7 @@ Requirements:
 To use:
 
 	0. Compile the emu
-	1. Fill in your card info (ATR, IDs, serials) below
+	1. Fill in your card info (ATR, IDs, serials) in noname.ini.readme
 		Hint: OSCAM can show you most of them, STB info menus may show you the rest.
 		Don't change the length of IDs and serials in the example config. 
 		Prepend with 00s instead if shorter
@@ -56,6 +56,6 @@ To use:
 	   modify the baud rate table, it works great, no headaches. 
 	   ... or implement the functionality in the serial classes yourself.)
 	4. Fill in your card server access details (emu has been tested with OSCAM only)
-	5. Rename this file to nonaxe.ini 
-		You may remove this large readme section if you wish
+	5. Rename nonaxe.ini.readme to nonaxe.ini 
+		You may remove the large readme section if you wish
 	6. Deploy and run
