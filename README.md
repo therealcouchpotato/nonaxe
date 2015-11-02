@@ -53,7 +53,7 @@ To use:
 	2. Configure the reset according to your interface
 	3. Configure the port and speed (note that unstandard bauds are not handled. 
 	   if you need them buy a CP2102 based interface and use the manufacturer tool to 
-	   modify the baud rate table, it works great, no headaches. 
+	   modify the baud rate table, it works great, no headaches. See the Wiki page on how to hook it up.
 	   ... or implement the functionality in the serial classes yourself.)
 	4. Fill in your card server access details (emu has been tested with OSCAM only)
 	5. Rename nonaxe.ini.readme to nonaxe.ini 
