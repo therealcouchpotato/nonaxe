@@ -53,8 +53,6 @@ end;
 implementation
 
 	constructor Camd35Gateway.new(config: TMemIniFile);
-  var
-    tmp ByteArray;
 	begin             
 		debug := config.readBool(CONFIG_CAMD_SECTION,CONFIG_DEBUG,false);
 		host := config.ReadString(CONFIG_CAMD_SECTION,CONFIG_HOST,'');
