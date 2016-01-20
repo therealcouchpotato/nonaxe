@@ -238,6 +238,7 @@ implementation
 		setLength(padPacket,4);
 		Move(packet[0],padPacket[4-Length(packet)],Length(packet));
 		Move(padPacket[0],recordNum,4);
+		recordNum := BEtoN(recordNum);
 		case recordNum of
 			$100140: begin
 				builder:=ConaxBuilder.new();
@@ -281,6 +282,7 @@ implementation
 			Halt(0);
 		end;
 		Move(packet[0],recordId,2);
+		recordId := BEtoN(recordId);
 		case recordId of
 			$6600: begin
 				builder:=ConaxBuilder.new();

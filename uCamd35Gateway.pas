@@ -27,9 +27,9 @@ const
 private
 	debug : Boolean;
 	ecmTimeout:Integer;
-	prvid: Cardinal;
-	srvid: Word;
-	caid: Word;
+	prvid: ByteArray;
+	srvid: ByteArray;
+	caid: ByteArray;
 	host: String;
 	port: String;
 	user: String;
@@ -58,9 +58,9 @@ implementation
 		host := config.ReadString(CONFIG_CAMD_SECTION,CONFIG_HOST,'');
 		port := config.ReadString(CONFIG_CAMD_SECTION,CONFIG_PORT,'');
 		user := config.ReadString(CONFIG_CAMD_SECTION,CONFIG_USER,'');
-		prvid := config.ReadInteger(CONFIG_CAMD_SECTION,CONFIG_PRVID,0);
-		srvid := config.ReadInteger(CONFIG_CAMD_SECTION,CONFIG_SRVID,0);
-		caid := config.ReadInteger(CONFIG_CAMD_SECTION,CONFIG_CAID,$0000);
+    prvid := hexStringToByteArray(config.readString(CONFIG_CAMD_SECTION,CONFIG_PRVID,'00000000'));
+    srvid := hexStringToByteArray(config.readString(CONFIG_CAMD_SECTION,CONFIG_SRVID,'0000'));
+    caid := hexStringToByteArray(config.readString(CONFIG_CAMD_SECTION,CONFIG_CAID,'0000'));    
 		password := config.ReadString(CONFIG_CAMD_SECTION,CONFIG_PASSWORD,'');
 		sendEMM := config.ReadBool(CONFIG_CAMD_SECTION,CONFIG_SENDEMM,false);
 		ecmTimeout := config.ReadInteger(CONFIG_CAMD_SECTION,CONFIG_ECM_TIMEOUT,1000);
@@ -189,9 +189,9 @@ implementation
 		payload[2] := $FF;
 		payload[3] := $FF;
 		Move(crc,payload[4],4);
-		Move(srvid,payload[8],2);
-		Move(caid,payload[10],2);
-		Move(prvid,payload[12],4);
+		Move(srvid[0],payload[8],2);
+		Move(caid[0],payload[10],2);
+		Move(prvid[0],payload[12],4);
 		
 		Move(emmPacket[0],payload[20],Length(emmPacket));
 
@@ -229,9 +229,9 @@ implementation
 		payload[2] := $FF;
 		payload[3] := $FF;
 		Move(crc,payload[4],4);
-		Move(srvid,payload[8],2);
-		Move(caid,payload[10],2);
-		Move(prvid,payload[12],4);
+		Move(srvid[0],payload[8],2);
+		Move(caid[0],payload[10],2);
+		Move(prvid[0],payload[12],4);
 		
 		Move(ecmPacket[0],payload[20],Length(ecmPacket)); // as it turns out size can be extracted from within the ECM packet
 								  // that's what oscam does now. re: lack of size info in header
