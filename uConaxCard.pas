@@ -270,21 +270,24 @@ implementation
 	const
 		NANO_CARD_SERIAL = $74;
 	var packet: ByteArray;
-	    recordId: Word;
+	    recordId: Cardinal;
 	    builder: ConaxBuilder;
 	    response: ByteArray;
 	begin
 		if (debug and debugTrace) then debugLn(self.className,'TRACE: handleReadSerial');
 
+		recordId := 0;
+
 		packet:=dissector.getPacket(command);
-		if Length(packet) <> 2 then begin
+		if Length(packet) > 4 then begin
 			debugLn(self.className,'handleReadSerial received unknown parameter length. Exiting preemptively.');
 			Halt(0);
 		end;
-		Move(packet[0],recordId,2);
+		Move(packet[0],recordId,Length(packet));
 		recordId := BEtoN(recordId);
-		case recordId of
-			$6600: begin
+		case recordId of			
+			$66000000,
+			$66010000: begin
 				builder:=ConaxBuilder.new();
 				builder.append(NANO_CARD_SERIAL, cardInfo.getCardSerial());
 				response:= builder.getBuffer();
@@ -292,7 +295,7 @@ implementation
 				answerQueue.write(response);
 			end;
 			else begin				
-				debugLn(self.className,'handleReadSerial received unknown parameter'+IntToHex(recordId,2)+'. Exiting preemptively.');
+				debugLn(self.className,'handleReadSerial received unknown parameter: '+IntToHex(recordId,2)+'. Exiting preemptively.');
 				Halt(0);
 			end;
 		end;
