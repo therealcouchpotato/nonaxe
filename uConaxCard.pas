@@ -225,7 +225,7 @@ implementation
 		NANO_SESSIONS = $23;
 	var packet: ByteArray;
 	    padPacket: ByteArray;
-	    recordNum: Cardinal;
+	    recordNumTmp, recordNum: Cardinal;
 	    builder: ConaxBuilder;
 	    response: ByteArray;
 	begin
@@ -237,8 +237,8 @@ implementation
 		end;
 		setLength(padPacket,4);
 		Move(packet[0],padPacket[4-Length(packet)],Length(packet));
-		Move(padPacket[0],recordNum,4);
-		recordNum := BEtoN(recordNum);
+		Move(padPacket[0],recordNumTmp,4);
+		recordNum := BEtoN(recordNumTmp);
 		case recordNum of
 			$100140: begin
 				builder:=ConaxBuilder.new();
@@ -270,7 +270,7 @@ implementation
 	const
 		NANO_CARD_SERIAL = $74;
 	var packet: ByteArray;
-	    recordId: Cardinal;
+	    recordIdTmp, recordId: Cardinal;
 	    builder: ConaxBuilder;
 	    response: ByteArray;
 	begin
@@ -283,8 +283,8 @@ implementation
 			debugLn(self.className,'handleReadSerial received unknown parameter length. Exiting preemptively.');
 			Halt(0);
 		end;
-		Move(packet[0],recordId,Length(packet));
-		recordId := BEtoN(recordId);
+		Move(packet[0],recordIdTmp,Length(packet));
+		recordId := BEtoN(recordIdTmp);
 		case recordId of			
 			$66000000,
 			$66010000: begin
